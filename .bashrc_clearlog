@@ -1,0 +1,51 @@
+#/**********************************************************
+#     Copyright (C) 2019 Shanghaitech SVIP Lab. All rights reserved.
+#     
+#     ScriptName: clear_log.sh
+#     Author: Lina Hu
+#     CreatedDate: Sat Mar 16 01:28:39 2019
+#     
+#*********************************************************
+#!/bin/bash
+source ~/.bashrc_trash
+alias clearlog=clearlogfunc
+alias caltime=caltimefunc
+alias calbs=calbsfunc
+clearlogfunc()
+{
+    dir=$1
+    for file in `ls $dir`; 
+    do 
+        file_path=$dir/$file
+        size=`du $file_path | awk '{print \$1}'`; 
+        if [ $size -lt 5 ]
+            then 
+                echo $file $size
+                read  "confirm?clear sure?[y/n]" 
+                echo $confirm
+                [[ $confirm == 'y' ]] || [[ $confirm == 'Y' ]] && rm $file_path
+        fi
+    done
+}
+
+caltimefunc()
+{
+    CAL_TIME_DIR=/root/weekly_meeting/segmentation/HLNet_V2/utils
+    ITERS=$1
+    TIME_PER_ITER=$2
+    python $CAL_TIME_DIR/cal_time.py  --i $ITERS \
+                                --t $TIME_PER_ITER
+}
+
+calbsfunc()
+{
+    CAL_TIME_DIR=/root/weekly_meeting/segmentation/HLNet_V2/utils
+    F_END_ITERS=$1
+    S_START_ITERS=$2
+    F_END_EPOCHES=$3
+    S_END_EPOCHES=$4
+    python $CAL_TIME_DIR/cal_bs.py  --fei ${F_END_ITERS} \
+                                --ssi ${S_START_ITERS} \
+                                --fee $F_END_EPOCHES \
+                                --see $S_END_EPOCHES
+}

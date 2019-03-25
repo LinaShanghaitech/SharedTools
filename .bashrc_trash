@@ -1,0 +1,21 @@
+#!/bin/bash
+alias rm=trash
+alias rl='ls ~/.trash'
+alias ur=undelfile
+alias ct=cleartrash
+undelfile()
+{
+    mv -i ~/.trash/$@ ./
+}
+
+trash()     
+{
+    mv $@ ~/.trash/
+}
+
+cleartrash()
+{
+    read  "confirm?clear sure?[y/n]" 
+    echo $confirm
+    [[ $confirm == 'y' ]] || [[ $confirm == 'Y' ]] && /bin/rm -rf  ~/.trash/*
+}
