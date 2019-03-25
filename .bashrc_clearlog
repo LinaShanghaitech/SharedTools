@@ -9,6 +9,7 @@
 #!/bin/bash
 source ~/.bashrc_trash
 alias clearlog=clearlogfunc
+alias clearsnapshot=clearsnapshotfunc
 alias caltime=caltimefunc
 alias calbs=calbsfunc
 clearlogfunc()
@@ -48,4 +49,18 @@ calbsfunc()
                                 --ssi ${S_START_ITERS} \
                                 --fee $F_END_EPOCHES \
                                 --see $S_END_EPOCHES
+}
+clearsnapshotfun()
+{
+    CLEAR_FOLDER=$1
+    START_ITER=$2
+    END_ITER=$3
+    CLEAR_INTERVAL=1
+    for ((i=$START_ITER; i<=$END_ITER; i=i+$CLEAR_INTERVAL));
+    do
+        CLEAR_FILE=${CLEAR_FOLDER}/LIP_epoch_$i.pth
+        if [ -f $CLEAR_FILE ]; then
+            rm $CLEAR_FILE
+        fi
+    done
 }
