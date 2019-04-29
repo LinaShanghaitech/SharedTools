@@ -1,2 +1,2 @@
-# SharedTools
-Useful tools or config
+# UsefulBash
+
